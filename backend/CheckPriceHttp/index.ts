@@ -1,6 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions';
 
 import { parseEuros, parseWeight } from './parsers/text.parser';
+import { parseNumber } from './parsers/number.parser';
 
 import * as puppeteer from 'puppeteer';
 import { OuncesParser } from './parsers/ounces.parser';
@@ -12,6 +13,7 @@ const httpTrigger: AzureFunction = async function (
   req: HttpRequest
 ): Promise<void> {
   const browser = await puppeteer.launch();
+  const officialPricePerOunce: number = req.query?.price ? parseNumber(req.query.price) : 1542.3;
 
   try {
     const page = await browser.newPage();
@@ -19,7 +21,9 @@ const httpTrigger: AzureFunction = async function (
 
     const pageProducts = await page.evaluate(() => {
       const sections = Array.from(document.getElementsByClassName('philoro_shoping-cart-heading'));
-      const goldSections = sections.filter((s) => s.innerHTML.toLowerCase().includes('gold')).map(c => c.parentElement.parentElement);;
+      const goldSections = sections
+        .filter((s) => s.innerHTML.toLowerCase().includes('gold'))
+        .map((c) => c.parentElement.parentElement);
 
       const products = goldSections
         .map((gs) => Array.from(gs.getElementsByClassName('philoro_shoping-cart--element')))
@@ -40,9 +44,12 @@ const httpTrigger: AzureFunction = async function (
         const price = parseEuros(p.price);
         const weight = parseWeight(p.weight);
         const weightInOunces = OuncesParser.parse({ value: weight.value, from: weight.unit });
-        const rate = price / weightInOunces;
-
-        return { title: p.title, rate, price, weight };
+        if(!weightInOunces){
+          context.log(weightInOunces);
+        }
+        const priceOfOneOunce = price / weightInOunces;
+        const rate = officialPricePerOunce / priceOfOneOunce;
+        return { title: p.title, priceOfOneOunce, price, weight, rate, weightInOunces };
       });
 
     context.res = {

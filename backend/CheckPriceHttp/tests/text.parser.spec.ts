@@ -6,7 +6,7 @@ describe('parse euros', () => {
     const value = ' € 1.522,40 ';
     const result = parseEuros(value);
 
-    expect(result).toBe(1522.4);
+    expect(result).toBeCloseTo(1522.4);
   });
 });
 
@@ -16,7 +16,7 @@ describe('parse weight', () => {
     const result = parseWeight(value);
 
     expect(result.unit).toBe(WeightUnit.kg);
-    expect(result.value).toBe(1.25);
+    expect(result.value).toBeCloseTo(1.25);
   });
 
   it('should parse grams', () => {
@@ -24,7 +24,7 @@ describe('parse weight', () => {
     const result = parseWeight(value);
 
     expect(result.unit).toBe(WeightUnit.g);
-    expect(result.value).toBe(12.15);
+    expect(result.value).toBeCloseTo(12.15);
   });
 
   it('should parse ounces', () => {
@@ -32,6 +32,6 @@ describe('parse weight', () => {
     const result = parseWeight(value);
 
     expect(result.unit).toBe(WeightUnit.oz);
-    expect(result.value).toBe(0.25);
+    expect(result.value).toBeCloseTo(0.25);
   });
 });

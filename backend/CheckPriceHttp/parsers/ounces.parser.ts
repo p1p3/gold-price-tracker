@@ -40,5 +40,7 @@ export class OuncesParser {
     if (!parser) {
       throw Error(`Parser not implemented: from ${command.from} to ${WeightUnit.oz}`);
     }
+
+    return parser.parse(command.value);
   }
 }

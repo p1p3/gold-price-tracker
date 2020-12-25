@@ -5,21 +5,21 @@ describe('parse euros', () => {
     const value = '579,80';
     const result = parseNumber(value);
 
-    expect(result).toBe(579.8);
+    expect(result).toBeCloseTo(579.8);
   });
 
   it('should parse thousands', () => {
     const value = '1.579,80';
     const result = parseNumber(value);
 
-    expect(result).toBe(1579.8);
+    expect(result).toBeCloseTo(1579.8);
   });
 
   it('should parse millions', () => {
     const value = '1.579.898,80';
     const result = parseNumber(value);
 
-    expect(result).toBe(1579898.8);
+    expect(result).toBeCloseTo(1579898.8);
   });
 });
 
@@ -28,6 +28,6 @@ describe('parse ounces', () => {
     const value = '0,50';
     const result = parseNumber(value);
 
-    expect(result).toBe(0.50);
+    expect(result).toBeCloseTo(0.50);
   });
 });
