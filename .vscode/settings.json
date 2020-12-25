@@ -1,0 +1,9 @@
+{
+    "azureFunctions.deploySubpath": "backend",
+    "azureFunctions.postDeployTask": "npm install",
+    "azureFunctions.projectLanguage": "TypeScript",
+    "azureFunctions.projectRuntime": "~3",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.preDeployTask": "npm prune",
+    "jestrunner.configPath": "backend/jest.config.js"
+}
