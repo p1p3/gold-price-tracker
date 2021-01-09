@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        background: #fafafa;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="demo"></div>
+    <my-accordion>
+      <my-accordion-panel label="K2" expanded="true">
+        <p>Age: 13</p>
+        <p>Color: gray</p>
+      </my-accordion-panel>
+      <my-accordion-panel label="Whitney">
+        <p>Age: 13</p>
+        <p>Color: orange</p>
+      </my-accordion-panel>
+      <my-accordion-panel label="Minnie">
+        <p>Age: 4</p>
+        <p>Color: gray</p>
+      </my-accordion-panel>
+      <my-accordion-panel label="Paul">
+        <p>Age: 3</p>
+        <p>Color: orange</p>
+      </my-accordion-panel>
+    </my-accordion>
+    <script type="module">
+      // import { html, render } from 'lit-html';
+      import { MyAccordion, MyAccordionPanel } from '../output/index.js';
+
+      MyAccordion;
+      MyAccordionPanel;
+
+    </script>
+  </body>
+</html>
