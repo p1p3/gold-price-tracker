@@ -1,4 +1,6 @@
 import { customElement, LitElement, css, property } from 'lit-element';
+import { classMap } from 'lit-html/directives/class-map';
+
 import { html } from 'lit-html';
 import { ariaPropertyState } from './aria.states';
 import { kebabCase } from './helpers';
@@ -10,7 +12,19 @@ export class MyAccordionPanel extends LitElement {
     @tailwind utilities;
 
     :host {
-      @apply p-5 w-full bg-red-500 block;
+      @apply block;
+    }
+
+    .icon {
+      height: 0.5rem;
+      width: 0.5rem;
+      border: solid hsl(0, 0%, 62%);
+      border-width: 0 2px 2px 0;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .icon.expanded {
+      transform: translateY(-50%) rotate(-135deg);
     }
   `;
 
@@ -25,15 +39,25 @@ export class MyAccordionPanel extends LitElement {
 
   render() {
     return html`
-      <h3 class="">
+      <h3 class="p-5 w-full border-gray-400  border-solid border-2">
         <button
           id="${kebabCase(this.label)}-button"
           type="button"
           aria-controls="${kebabCase(this.label)}-panel"
           @click="${() => this.expand()}"
-          class="bg-red-500"
+          class="w-full flex items-center justify-start pr-1"
         >
-          ${this.label}
+          <span class="flex-grow justify-self-start text-left"
+            >${this.label}</span
+          >
+          <span
+            class=${classMap({
+              icon: true,
+              'pointer-events-none': true,
+              'justify-self-end': true,
+              expanded: this.expanded,
+            })}
+          ></span>
         </button>
       </h3>
       <div
