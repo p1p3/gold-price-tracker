@@ -44,6 +44,7 @@ export class MyAccordionPanel extends LitElement {
           id="${kebabCase(this.label)}-button"
           type="button"
           aria-controls="${kebabCase(this.label)}-panel"
+          aria-expanded="${this.expanded}"
           @click="${() => this.expand()}"
           class="w-full flex items-center justify-start pr-1"
         >
@@ -65,6 +66,7 @@ export class MyAccordionPanel extends LitElement {
         role="region"
         aria-labelledby="${kebabCase(this.label)}-button"
         .hidden="${!this.expanded}"
+        class="p-5 border-gray-400  border-solid border-2"
       >
         <slot></slot>
       </div>
